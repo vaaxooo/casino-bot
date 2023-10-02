@@ -18,8 +18,17 @@ bot.gameQuery((ctx) => {
 		telegram_id: user.from.id,
 		timestamp: currentTimestamp
 	}
+
+	let userInfo = {
+		telegram_id: user.from.id,
+		first_name: user.from.first_name || '',
+		username: user.from.username || '',
+		photo_url: user.from.photo_url || '',
+		last_name: user.from.last_name || ''
+	}
+
 	let hash = md5(JSON.stringify(userData) + process.env.SECRET);
-	let gameUrl = process.env.URL + "/auth?telegram_hash=" + hash + "&telegram_id=" + user.from.id + "&timestamp=" + currentTimestamp + "&lang=ru" + "&first_name=" + user.from.first_name + "&username=" + user.from.username + "&photo_url=" + user.from.photo_url + "&last_name=" + user.from.last_name
+	let gameUrl = process.env.URL + "/auth?telegram_hash=" + hash + "&telegram_id=" + user.from.id + "&timestamp=" + currentTimestamp + "&lang=ru" + "&first_name=" + userInfo.first_name + "&username=" + userInfo.username + "&photo_url=" + userInfo.photo_url + "&last_name=" + userInfo.last_name
 	ctx.answerGameQuery(gameUrl)
 })
 bot.launch()
